@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #050505;
+  --card: #121212;
+  --card2: #1a1a1a;
+  --accent: #7f1d1d;
+  --border: rgba(255, 255, 255, 0.1);
+
+  --text-pri: #f5f5f5;
+  --text-sec: #d4d4d4;
+  --text-mute: #8a8a8a;
+
+  /* Red is the single accent — used for both brand emphasis and "needs attention".
+     Two intensities carry severity: bright red = urgent, dim/muted red = moderate. */
+  --red: #ef4444;
+  --red-bg: rgba(239, 68, 68, 0.14);
+  --red-border: rgba(239, 68, 68, 0.4);
+
+  --red-dim: #b45050;
+  --red-dim-bg: rgba(180, 80, 80, 0.14);
+  --red-dim-border: rgba(180, 80, 80, 0.4);
+
+  --white-bg: rgba(255, 255, 255, 0.08);
+  --white-border: rgba(255, 255, 255, 0.3);
+
+  --header-band: #232323;
+
+  --background: var(--bg);
+  --foreground: var(--text-pri);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-pri);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--red);
+  color: #ffffff;
+}
+
+/* Shared primitives used across pages */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.data-table thead th {
+  background: var(--header-band);
+  color: var(--text-pri);
+  text-align: left;
+  font-weight: 600;
+  padding: 0.65rem 0.85rem;
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid var(--red);
+}
+
+.data-table tbody td {
+  padding: 0.65rem 0.85rem;
+  border-top: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  white-space: nowrap;
+}
+
+.tag-red {
+  background: var(--red-bg);
+  border-color: var(--red-border);
+  color: var(--red);
+}
+
+.tag-red-dim {
+  background: var(--red-dim-bg);
+  border-color: var(--red-dim-border);
+  color: var(--red-dim);
+}
+
+.tag-white {
+  background: var(--white-bg);
+  border-color: var(--white-border);
+  color: var(--text-pri);
+}
+
+.tag-mute {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--border);
+  color: var(--text-mute);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--text-pri);
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.btn:hover {
+  background: #262626;
+  border-color: var(--red-dim);
+}
+
+.btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+input,
+select,
+textarea {
+  background: var(--card2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-pri);
+  padding: 0.45rem 0.65rem;
+  font-size: 0.875rem;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--red);
+}
+
+label {
+  font-size: 0.8rem;
+  color: var(--text-sec);
+}
+
+@media print {
+  body {
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

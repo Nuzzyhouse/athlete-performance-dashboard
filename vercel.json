@@ -1,0 +1,8 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/vald-sync",
+      "schedule": "0 9 * * *"
+    }
+  ]
+}

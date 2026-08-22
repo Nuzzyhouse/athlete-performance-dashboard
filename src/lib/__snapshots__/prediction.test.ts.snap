@@ -1,0 +1,632 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`computeAnalytics > matches the pinned snapshot for a known roster 1`] = `
+{
+  "athletes": {
+    "a1": {
+      "category": "on-track",
+      "gap": 0.9,
+      "id": "a1",
+      "model": "regression",
+      "offset": -0.0511272261543553,
+      "pred": 87.1,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 50,
+          "rank": 7,
+        },
+      },
+    },
+    "a10": {
+      "category": "high-priority",
+      "gap": -4.4,
+      "id": "a10",
+      "model": "regression",
+      "offset": 0.36738258226140436,
+      "pred": 98.4,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 86,
+          "rank": 2,
+        },
+      },
+    },
+    "a11": {
+      "category": "overperforming",
+      "gap": 15.6,
+      "id": "a11",
+      "model": "regression",
+      "offset": -4.736951571734001e-15,
+      "pred": 44.4,
+      "ranks": {
+        "brfd": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+        "ci": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+        "mph": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+        "mrsi": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+        "pp": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+        "ppbm": {
+          "flagged": true,
+          "percentile": 0,
+          "rank": 14,
+        },
+      },
+    },
+    "a12": {
+      "category": "on-track",
+      "gap": 0.3,
+      "id": "a12",
+      "model": "regression",
+      "offset": 0.04679625983269205,
+      "pred": 88.7,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 64,
+          "rank": 5,
+        },
+      },
+    },
+    "a13": {
+      "category": "on-track",
+      "gap": -0.5,
+      "id": "a13",
+      "model": "manual",
+      "offset": null,
+      "pred": 89.5,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 57,
+          "rank": 6,
+        },
+      },
+    },
+    "a14": {
+      "category": "awaiting-performance",
+      "gap": null,
+      "id": "a14",
+      "model": "regression",
+      "offset": 2.1104254538103433,
+      "pred": 84.5,
+      "ranks": {
+        "brfd": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+        "ci": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+        "mrsi": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+        "pp": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+        "ppbm": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+      },
+    },
+    "a15": {
+      "category": "awaiting-data",
+      "gap": null,
+      "id": "a15",
+      "model": null,
+      "offset": null,
+      "pred": null,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+        "mph": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": null,
+          "rank": null,
+        },
+      },
+    },
+    "a2": {
+      "category": "on-track",
+      "gap": -0.2,
+      "id": "a2",
+      "model": "regression",
+      "offset": 0.14471974581975644,
+      "pred": 90.2,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 71,
+          "rank": 4,
+        },
+      },
+    },
+    "a3": {
+      "category": "moderate",
+      "gap": -2.6,
+      "id": "a3",
+      "model": "regression",
+      "offset": 0.5405667177938568,
+      "pred": 93.6,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 79,
+          "rank": 3,
+        },
+      },
+    },
+    "a4": {
+      "category": "on-track",
+      "gap": 0.3,
+      "id": "a4",
+      "model": "regression",
+      "offset": 0.050949287858597356,
+      "pred": 85.7,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+      },
+    },
+    "a5": {
+      "category": "on-track",
+      "gap": 0.3,
+      "id": "a5",
+      "model": "regression",
+      "offset": 2.03237283027633,
+      "pred": 83.7,
+      "ranks": {
+        "brfd": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+        "ci": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+        "mph": {
+          "flagged": true,
+          "percentile": 21,
+          "rank": 11,
+        },
+        "mrsi": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+        "pp": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+        "ppbm": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+      },
+    },
+    "a6": {
+      "category": "on-track",
+      "gap": -0.7,
+      "id": "a6",
+      "model": "regression",
+      "offset": 2.279271990530063,
+      "pred": 85.7,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 29,
+          "rank": 10,
+        },
+      },
+    },
+    "a7": {
+      "category": "on-track",
+      "gap": -0.4,
+      "id": "a7",
+      "model": "regression",
+      "offset": 2.202500353631246,
+      "pred": 82.4,
+      "ranks": {
+        "brfd": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+        "ci": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+        "mph": {
+          "flagged": true,
+          "percentile": 14,
+          "rank": 12,
+        },
+        "mrsi": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+        "pp": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+        "ppbm": {
+          "flagged": true,
+          "percentile": 7,
+          "rank": 13,
+        },
+      },
+    },
+    "a8": {
+      "category": "on-track",
+      "gap": 0.7,
+      "id": "a8",
+      "model": "regression",
+      "offset": 1.927556640803734,
+      "pred": 86.3,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 43,
+          "rank": 8,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 36,
+          "rank": 9,
+        },
+      },
+    },
+    "a9": {
+      "category": "high-priority",
+      "gap": -5.5,
+      "id": "a9",
+      "model": "regression",
+      "offset": 0.4564039331587253,
+      "pred": 101.5,
+      "ranks": {
+        "brfd": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+        "ci": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+        "mph": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+        "mrsi": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+        "pp": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+        "ppbm": {
+          "flagged": false,
+          "percentile": 93,
+          "rank": 1,
+        },
+      },
+    },
+  },
+  "excludedFromFit": [
+    {
+      "id": "a11",
+      "name": "a11",
+      "reason": "statistical outlier — held out of the regression fit, still predicted and ranked normally",
+    },
+  ],
+  "fitSetSize": 12,
+  "insufficientData": false,
+  "regression": {
+    "ci": {
+      "intercept": 48.815291883411774,
+      "slope": 0.18355214268020809,
+    },
+    "meanVelo": 88.41666666666667,
+    "pp": {
+      "intercept": 38.74989411266413,
+      "slope": 0.009415501905972045,
+    },
+    "ppbm": {
+      "intercept": 29.864530225782964,
+      "slope": 0.9337217771303714,
+    },
+  },
+}
+`;
