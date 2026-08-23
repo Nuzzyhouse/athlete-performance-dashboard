@@ -55,19 +55,45 @@ async function getAccessToken(): Promise<string> {
   return cachedToken.token;
 }
 
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+const MAX_RETRIES = 4;
+
+/**
+ * A multi-year backfill fires hundreds of sequential per-test requests (one for each
+ * test's trial data) and reliably trips VALD's rate limit. Back off and retry on 429s
+ * (honoring Retry-After when present) rather than failing the whole sync on the first one.
+ */
 async function valdFetch<T>(url: string): Promise<T> {
   const token = await getAccessToken();
-  const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
-  if (!res.ok) {
-    throw new Error(`VALD request failed (${res.status}): ${url}`);
+
+  for (let attempt = 0; attempt <= MAX_RETRIES; attempt++) {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
+
+    if (res.status === 429 && attempt < MAX_RETRIES) {
+      const retryAfterHeader = res.headers.get("retry-after");
+      const retryAfterMs = retryAfterHeader ? Number(retryAfterHeader) * 1000 : NaN;
+      const backoffMs = Number.isFinite(retryAfterMs) ? retryAfterMs : 500 * 2 ** attempt;
+      await sleep(backoffMs);
+      continue;
+    }
+
+    if (!res.ok) {
+      throw new Error(`VALD request failed (${res.status}): ${url}`);
+    }
+
+    // The tests-pagination endpoint signals "no more pages" with a bodyless 204 —
+    // calling .json() on that throws "Unexpected end of JSON input".
+    if (res.status === 204) {
+      return null as T;
+    }
+    const text = await res.text();
+    return (text ? JSON.parse(text) : null) as T;
   }
-  // The tests-pagination endpoint signals "no more pages" with a bodyless 204 —
-  // calling .json() on that throws "Unexpected end of JSON input".
-  if (res.status === 204) {
-    return null as T;
-  }
-  const text = await res.text();
-  return (text ? JSON.parse(text) : null) as T;
+
+  throw new Error(`VALD request failed: rate limited after ${MAX_RETRIES} retries: ${url}`);
 }
 
 export interface ValdTenant {

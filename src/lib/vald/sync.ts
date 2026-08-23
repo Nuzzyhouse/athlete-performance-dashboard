@@ -52,15 +52,18 @@ export async function buildSyncPreview(sinceISO: string): Promise<SyncPreview> {
     const profile = profileById.get(test.profileId);
     const profileName = profile ? `${profile.givenName} ${profile.familyName}`.trim() : test.profileId;
 
-    const trials = await getTrials(tenant.id, test.testId);
-    const metrics = mapCmjTrialsToMetrics(trials);
-    if (!metrics) continue;
-
+    // Check the (cheap, in-memory) roster match before the (expensive, rate-limited)
+    // per-test trial fetch — a multi-year account often has far more historical
+    // profiles than current roster athletes, and unmatched entries don't need metrics.
     const athlete = rosterByNormalizedName.get(normalizeName(profileName));
     if (!athlete) {
       unmatched.push({ valdTestId: test.testId, profileName, date: test.recordedDateUtc });
       continue;
     }
+
+    const trials = await getTrials(tenant.id, test.testId);
+    const metrics = mapCmjTrialsToMetrics(trials);
+    if (!metrics) continue;
 
     matched.push({
       valdTestId: test.testId,
