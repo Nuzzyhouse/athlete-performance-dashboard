@@ -12,6 +12,21 @@ export default function ChangePasswordPage() {
       }}
     >
       <div className="card" style={{ width: 380, padding: "2rem" }}>
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: 8,
+            padding: "0.7rem 0.85rem",
+            marginBottom: "1.25rem",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/x3-logo.gif"
+            alt="X3 Performance and Physical Therapy"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
+        </div>
         <h1
           style={{
             fontSize: "1.25rem",
