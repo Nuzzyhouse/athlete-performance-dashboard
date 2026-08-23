@@ -6,8 +6,10 @@ import {
   previewSyncAction,
   confirmImportAction,
   dismissUnmatchedAction,
+  listDismissedAction,
+  undismissAction,
 } from "@/lib/actions/sync";
-import type { SyncPreview, PreviewMatch } from "@/lib/vald/sync";
+import type { SyncPreview, PreviewMatch, DismissedTestRow } from "@/lib/vald/sync";
 import { formatDateMDY } from "@/lib/dates";
 
 export function SyncClient({
@@ -23,6 +25,8 @@ export function SyncClient({
   const [importResult, setImportResult] = useState<number | null>(null);
   const [pending, startTransition] = useTransition();
   const [sinceDays, setSinceDays] = useState(30);
+  const [dismissedList, setDismissedList] = useState<DismissedTestRow[] | null>(null);
+  const [dismissedQuery, setDismissedQuery] = useState("");
 
   function toggleExcluded(id: string) {
     setExcluded((prev) => {
@@ -208,6 +212,82 @@ export function SyncClient({
           <p style={{ fontSize: "0.82rem", color: "var(--text-pri)", marginTop: "0.75rem" }}>
             Imported {importResult} test{importResult === 1 ? "" : "s"}.
           </p>
+        )}
+      </div>
+
+      <div className="card" style={{ padding: "1.1rem 1.25rem" }}>
+        <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: "0.6rem" }}>
+          <h2 style={{ fontSize: "0.95rem", fontWeight: 700 }}>Dismissed tests</h2>
+          {dismissedList !== null && (
+            <span style={{ fontSize: "0.75rem", color: "var(--text-mute)" }}>
+              {dismissedList.length} total
+            </span>
+          )}
+        </div>
+        <p style={{ fontSize: "0.75rem", color: "var(--text-mute)", marginBottom: "0.6rem" }}>
+          Dismissing a test only removes it from this app's import queue — nothing in VALD is
+          touched. Undoing here makes it eligible to show up as unmatched again next preview.
+        </p>
+
+        {dismissedList === null ? (
+          <button
+            type="button"
+            className="btn"
+            disabled={pending}
+            onClick={() =>
+              startTransition(async () => {
+                setDismissedList(await listDismissedAction());
+              })
+            }
+          >
+            {pending ? "Loading…" : "Show dismissed tests"}
+          </button>
+        ) : dismissedList.length === 0 ? (
+          <p style={{ fontSize: "0.82rem", color: "var(--text-mute)" }}>Nothing dismissed yet.</p>
+        ) : (
+          <div>
+            <input
+              placeholder="Search by name…"
+              value={dismissedQuery}
+              onChange={(e) => setDismissedQuery(e.target.value)}
+              style={{ marginBottom: "0.75rem", minWidth: 220 }}
+            />
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem", maxHeight: 400, overflowY: "auto" }}>
+              {dismissedList
+                .filter((d) => d.profileName.toLowerCase().includes(dismissedQuery.trim().toLowerCase()))
+                .map((d) => (
+                  <div
+                    key={d.valdTestId}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      fontSize: "0.8rem",
+                    }}
+                  >
+                    <span>
+                      {d.profileName} — dismissed {formatDateMDY(d.dismissedAt)}
+                    </span>
+                    <button
+                      type="button"
+                      className="btn"
+                      style={{ fontSize: "0.72rem", padding: "0.2rem 0.5rem" }}
+                      disabled={pending}
+                      onClick={() =>
+                        startTransition(async () => {
+                          await undismissAction(d.valdTestId);
+                          setDismissedList((list) =>
+                            list ? list.filter((x) => x.valdTestId !== d.valdTestId) : list,
+                          );
+                        })
+                      }
+                    >
+                      Undo
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
         )}
       </div>
     </div>

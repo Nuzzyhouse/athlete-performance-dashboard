@@ -126,3 +126,19 @@ export async function dismissUnmatched(valdTestId: string, profileName: string) 
     create: { valdTestId, profileName },
   });
 }
+
+export interface DismissedTestRow {
+  valdTestId: string;
+  profileName: string;
+  dismissedAt: Date;
+}
+
+export async function listDismissed(): Promise<DismissedTestRow[]> {
+  return prisma.dismissedTest.findMany({ orderBy: { dismissedAt: "desc" } });
+}
+
+/** Reverses a dismissal — the test will resurface in the next preview if it still
+ * doesn't match anything already imported. Does not touch VALD or any other data. */
+export async function undismiss(valdTestId: string) {
+  await prisma.dismissedTest.delete({ where: { valdTestId } });
+}

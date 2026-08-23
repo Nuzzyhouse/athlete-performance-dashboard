@@ -4,7 +4,14 @@ import { revalidatePath } from "next/cache";
 import { requireOwner } from "@/lib/authz";
 import { prisma } from "@/lib/prisma";
 import { getTenant, isValdConfigured } from "@/lib/vald/client";
-import { buildSyncPreview, importMatches, dismissUnmatched, type PreviewMatch } from "@/lib/vald/sync";
+import {
+  buildSyncPreview,
+  importMatches,
+  dismissUnmatched,
+  listDismissed,
+  undismiss,
+  type PreviewMatch,
+} from "@/lib/vald/sync";
 
 export async function testConnectionAction(): Promise<{ ok: boolean; message: string }> {
   await requireOwner();
@@ -46,5 +53,16 @@ export async function confirmImportAction(matches: PreviewMatch[], unmatchedName
 export async function dismissUnmatchedAction(valdTestId: string, profileName: string) {
   await requireOwner();
   await dismissUnmatched(valdTestId, profileName);
+  revalidatePath("/sync");
+}
+
+export async function listDismissedAction() {
+  await requireOwner();
+  return listDismissed();
+}
+
+export async function undismissAction(valdTestId: string) {
+  await requireOwner();
+  await undismiss(valdTestId);
   revalidatePath("/sync");
 }
