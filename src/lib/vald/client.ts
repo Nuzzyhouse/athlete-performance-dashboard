@@ -61,7 +61,13 @@ async function valdFetch<T>(url: string): Promise<T> {
   if (!res.ok) {
     throw new Error(`VALD request failed (${res.status}): ${url}`);
   }
-  return res.json() as Promise<T>;
+  // The tests-pagination endpoint signals "no more pages" with a bodyless 204 —
+  // calling .json() on that throws "Unexpected end of JSON input".
+  if (res.status === 204) {
+    return null as T;
+  }
+  const text = await res.text();
+  return (text ? JSON.parse(text) : null) as T;
 }
 
 export interface ValdTenant {
@@ -70,8 +76,8 @@ export interface ValdTenant {
 }
 
 export async function getTenant(): Promise<ValdTenant> {
-  const data = await valdFetch<{ tenants: ValdTenant[] }>(`${serviceHost("externaltenants")}/tenants`);
-  const tenant = data.tenants?.[0];
+  const data = await valdFetch<{ tenants: ValdTenant[] } | null>(`${serviceHost("externaltenants")}/tenants`);
+  const tenant = data?.tenants?.[0];
   if (!tenant) throw new Error("No VALD tenant found for this org.");
   return tenant;
 }
@@ -83,10 +89,10 @@ export interface ValdProfile {
 }
 
 export async function getProfiles(tenantId: string): Promise<ValdProfile[]> {
-  const data = await valdFetch<{ profiles: ValdProfile[] }>(
+  const data = await valdFetch<{ profiles: ValdProfile[] } | null>(
     `${serviceHost("externalprofile")}/profiles?tenantId=${encodeURIComponent(tenantId)}`,
   );
-  return data.profiles ?? [];
+  return data?.profiles ?? [];
 }
 
 export interface ValdTest {
@@ -129,8 +135,8 @@ export interface ValdTrial {
 }
 
 export async function getTrials(tenantId: string, testId: string): Promise<ValdTrial[]> {
-  const data = await valdFetch<{ trials: ValdTrial[] }>(
+  const data = await valdFetch<{ trials: ValdTrial[] } | null>(
     `${serviceHost("extforcedecks")}/v2019q3/teams/${encodeURIComponent(tenantId)}/tests/${encodeURIComponent(testId)}/trials`,
   );
-  return data.trials ?? [];
+  return data?.trials ?? [];
 }
