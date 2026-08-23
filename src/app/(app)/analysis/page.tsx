@@ -13,7 +13,7 @@ export default async function AnalysisPage() {
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
         <div className="card" style={{ padding: "1.25rem" }}>
           <h2 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "0.75rem" }}>
-            Power vs. Velocity
+            Peak Power/BW vs. mRSI
           </h2>
           <QuadrantChart data={quadrant} />
         </div>

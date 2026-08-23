@@ -13,15 +13,15 @@ export interface QuadrantPoint {
   athleteId: string;
   athleteName: string;
   level: string;
-  pp: number;
-  mph: number;
+  ppbm: number;
+  mrsi: number;
   category: PredictionCategory;
 }
 
 export interface QuadrantData {
   points: QuadrantPoint[];
-  medianPp: number;
-  medianMph: number;
+  medianPpbm: number;
+  medianMrsi: number;
 }
 
 export interface LeaderboardRow {
@@ -45,20 +45,20 @@ export async function getAnalysisData() {
   const { athletes, result } = await getActiveRosterWithAnalytics();
 
   const quadrantPoints: QuadrantPoint[] = athletes
-    .filter((a) => a.pp > 0 && a.mph > 0)
+    .filter((a) => a.ppbm > 0 && a.mrsi > 0)
     .map((a) => ({
       athleteId: a.id,
       athleteName: a.name,
       level: a.level,
-      pp: a.pp,
-      mph: a.mph,
+      ppbm: a.ppbm,
+      mrsi: a.mrsi,
       category: result.athletes[a.id].category,
     }));
 
   const quadrant: QuadrantData = {
     points: quadrantPoints,
-    medianPp: median(quadrantPoints.map((p) => p.pp)),
-    medianMph: median(quadrantPoints.map((p) => p.mph)),
+    medianPpbm: median(quadrantPoints.map((p) => p.ppbm)),
+    medianMrsi: median(quadrantPoints.map((p) => p.mrsi)),
   };
 
   const gapRows: LeaderboardRow[] = athletes

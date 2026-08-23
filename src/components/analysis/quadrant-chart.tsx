@@ -16,44 +16,45 @@ const PAD = 56;
 
 export function QuadrantChart({ data }: { data: QuadrantData }) {
   const router = useRouter();
-  const { points, medianPp, medianMph } = data;
+  const { points, medianPpbm, medianMrsi } = data;
 
   if (points.length === 0) {
     return (
       <p style={{ fontSize: "0.85rem", color: "var(--text-mute)" }}>
-        Not enough tested-and-measured athletes yet to plot the quadrant.
+        Not enough athletes with both Peak Power/BW and mRSI yet to plot the quadrant.
       </p>
     );
   }
 
-  const ppVals = points.map((p) => p.pp);
-  const mphVals = points.map((p) => p.mph);
-  const ppMin = Math.min(...ppVals, medianPp) * 0.95;
-  const ppMax = Math.max(...ppVals, medianPp) * 1.05;
-  const mphMin = Math.min(...mphVals, medianMph) * 0.95;
-  const mphMax = Math.max(...mphVals, medianMph) * 1.05;
+  const ppbmVals = points.map((p) => p.ppbm);
+  const mrsiVals = points.map((p) => p.mrsi);
+  const ppbmMin = Math.min(...ppbmVals, medianPpbm) * 0.95;
+  const ppbmMax = Math.max(...ppbmVals, medianPpbm) * 1.05;
+  const mrsiMin = Math.min(...mrsiVals, medianMrsi) * 0.95;
+  const mrsiMax = Math.max(...mrsiVals, medianMrsi) * 1.05;
 
-  const x = (pp: number) => PAD + ((pp - ppMin) / (ppMax - ppMin)) * (WIDTH - PAD * 2);
-  const y = (mph: number) => HEIGHT - PAD - ((mph - mphMin) / (mphMax - mphMin)) * (HEIGHT - PAD * 2);
+  const x = (ppbm: number) => PAD + ((ppbm - ppbmMin) / (ppbmMax - ppbmMin)) * (WIDTH - PAD * 2);
+  const y = (mrsi: number) =>
+    HEIGHT - PAD - ((mrsi - mrsiMin) / (mrsiMax - mrsiMin)) * (HEIGHT - PAD * 2);
 
-  const medianX = x(medianPp);
-  const medianY = y(medianMph);
+  const medianX = x(medianPpbm);
+  const medianY = y(medianMrsi);
 
   return (
     <div style={{ overflowX: "auto" }}>
       <svg width="100%" viewBox={`0 0 ${WIDTH} ${HEIGHT}`} style={{ minWidth: 560 }}>
         {/* Quadrant labels */}
         <text x={PAD + 8} y={PAD + 18} fontSize="11" fill="var(--text-mute)">
-          Underexpressed — engine ahead of output
+          Reactive, not powerful — needs strength/power work
         </text>
         <text x={WIDTH - PAD - 8} y={PAD + 18} fontSize="11" fill="var(--text-mute)" textAnchor="end">
-          Elite — high engine, high output
+          Elite — strong and reactive
         </text>
         <text x={PAD + 8} y={HEIGHT - PAD - 8} fontSize="11" fill="var(--text-mute)">
-          Developing — building the base
+          Developing — building both qualities
         </text>
         <text x={WIDTH - PAD - 8} y={HEIGHT - PAD - 8} fontSize="11" fill="var(--text-mute)" textAnchor="end">
-          Overachieving — output ahead of engine
+          Strong, not reactive — needs plyometric/RSI work
         </text>
 
         {/* Median split lines */}
@@ -64,7 +65,7 @@ export function QuadrantChart({ data }: { data: QuadrantData }) {
         <line x1={PAD} y1={HEIGHT - PAD} x2={WIDTH - PAD} y2={HEIGHT - PAD} stroke="var(--text-mute)" />
         <line x1={PAD} y1={PAD} x2={PAD} y2={HEIGHT - PAD} stroke="var(--text-mute)" />
         <text x={WIDTH / 2} y={HEIGHT - 14} fontSize="12" fill="var(--text-sec)" textAnchor="middle">
-          Peak Power (engine) →
+          Peak Power / BW →
         </text>
         <text
           x={16}
@@ -74,14 +75,14 @@ export function QuadrantChart({ data }: { data: QuadrantData }) {
           textAnchor="middle"
           transform={`rotate(-90, 16, ${HEIGHT / 2})`}
         >
-          Velocity (expression) →
+          mRSI →
         </text>
 
         {points.map((p) => (
           <circle
             key={p.athleteId}
-            cx={x(p.pp)}
-            cy={y(p.mph)}
+            cx={x(p.ppbm)}
+            cy={y(p.mrsi)}
             r={6}
             fill={CATEGORY_COLOR[p.category] ?? "var(--text-mute)"}
             stroke="var(--bg)"
@@ -89,7 +90,7 @@ export function QuadrantChart({ data }: { data: QuadrantData }) {
             style={{ cursor: "pointer" }}
             onClick={() => router.push(`/athletes/${p.athleteId}`)}
           >
-            <title>{`${p.athleteName} (${p.level}) — ${Math.round(p.pp)}W, ${p.mph} mph`}</title>
+            <title>{`${p.athleteName} (${p.level}) — ${p.ppbm.toFixed(1)} W/kg, ${p.mrsi.toFixed(2)} mRSI`}</title>
           </circle>
         ))}
       </svg>
