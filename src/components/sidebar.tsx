@@ -20,7 +20,10 @@ export function Sidebar({
 }) {
   const pathname = usePathname();
 
-  const items = role === "owner" ? [...NAV_ITEMS, { href: "/sync", label: "Sync" }] : NAV_ITEMS;
+  const items =
+    role === "owner"
+      ? [...NAV_ITEMS, { href: "/sync", label: "Sync" }, { href: "/users", label: "Users" }]
+      : NAV_ITEMS;
 
   return (
     <aside
