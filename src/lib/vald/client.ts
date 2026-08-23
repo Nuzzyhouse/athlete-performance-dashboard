@@ -163,8 +163,10 @@ export interface ValdTrial {
 }
 
 export async function getTrials(tenantId: string, testId: string): Promise<ValdTrial[]> {
-  const data = await valdFetch<{ trials: ValdTrial[] } | null>(
+  // Unlike every other extforcedecks endpoint, this one returns a bare JSON array
+  // rather than `{ trials: [...] }` — confirmed against the live API.
+  const data = await valdFetch<ValdTrial[] | null>(
     `${serviceHost("extforcedecks")}/v2019q3/teams/${encodeURIComponent(tenantId)}/tests/${encodeURIComponent(testId)}/trials`,
   );
-  return data?.trials ?? [];
+  return data ?? [];
 }
