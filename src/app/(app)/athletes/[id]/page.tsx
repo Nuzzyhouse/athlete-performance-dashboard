@@ -9,6 +9,7 @@ import { TestHistory } from "@/components/athlete/test-history";
 import { AddTestForm } from "@/components/athlete/add-test-form";
 import { clubTodayISO, daysBetweenISO, toClubISODate } from "@/lib/dates";
 import { RETEST_WINDOW_DAYS } from "@/lib/constants";
+import { isEditorRole } from "@/lib/roles";
 
 export default async function AthleteProfilePage({
   params,
@@ -23,7 +24,7 @@ export default async function AthleteProfilePage({
   }
 
   const { athlete, analytics, excludedFromFit } = detail;
-  const isOwner = session?.user?.role === "owner";
+  const isOwner = isEditorRole(session?.user?.role ?? "");
 
   const newestForcePlateTestDate =
     athlete.tests.filter((t) => t.isForcePlate).sort((a, b) => b.date.getTime() - a.date.getTime())[0]

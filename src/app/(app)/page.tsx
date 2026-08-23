@@ -5,6 +5,7 @@ import { RecentActivity } from "@/components/dashboard/recent-activity";
 import { NeedsConversation } from "@/components/dashboard/needs-conversation";
 import { DueToRetest } from "@/components/dashboard/due-to-retest";
 import { SyncBanner } from "@/components/dashboard/sync-banner";
+import { isEditorRole } from "@/lib/roles";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -29,7 +30,7 @@ export default async function DashboardPage() {
         <h1 style={{ fontSize: "1.4rem", fontWeight: 700 }}>Hello, {firstName}</h1>
       </div>
 
-      <SyncBanner unmatchedCount={unmatched.length} isOwner={session?.user?.role === "owner"} />
+      <SyncBanner unmatchedCount={unmatched.length} isOwner={isEditorRole(session?.user?.role ?? "")} />
 
       <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
         <RecentActivity sessions={data.recentActivity} />

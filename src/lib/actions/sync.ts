@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireOwner } from "@/lib/authz";
+import { requireEditor } from "@/lib/authz";
 import { prisma } from "@/lib/prisma";
 import { getTenant, isValdConfigured } from "@/lib/vald/client";
 import {
@@ -14,7 +14,7 @@ import {
 } from "@/lib/vald/sync";
 
 export async function testConnectionAction(): Promise<{ ok: boolean; message: string }> {
-  await requireOwner();
+  await requireEditor();
 
   if (!isValdConfigured()) {
     return { ok: false, message: "VALD_CLIENT_ID / VALD_CLIENT_SECRET are not set in your environment." };
@@ -28,13 +28,13 @@ export async function testConnectionAction(): Promise<{ ok: boolean; message: st
 }
 
 export async function previewSyncAction(sinceDays: number) {
-  await requireOwner();
+  await requireEditor();
   const since = new Date(Date.now() - sinceDays * 86_400_000).toISOString();
   return buildSyncPreview(since);
 }
 
 export async function confirmImportAction(matches: PreviewMatch[], unmatchedNames: string[]) {
-  await requireOwner();
+  await requireEditor();
   const imported = await importMatches(matches);
 
   await prisma.syncState.upsert({
@@ -51,18 +51,18 @@ export async function confirmImportAction(matches: PreviewMatch[], unmatchedName
 }
 
 export async function dismissUnmatchedAction(valdTestId: string, profileName: string) {
-  await requireOwner();
+  await requireEditor();
   await dismissUnmatched(valdTestId, profileName);
   revalidatePath("/sync");
 }
 
 export async function listDismissedAction() {
-  await requireOwner();
+  await requireEditor();
   return listDismissed();
 }
 
 export async function undismissAction(valdTestId: string) {
-  await requireOwner();
+  await requireEditor();
   await undismiss(valdTestId);
   revalidatePath("/sync");
 }

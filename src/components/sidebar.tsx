@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignOutButton } from "@/components/sign-out-button";
+import { isEditorRole } from "@/lib/roles";
 
 const NAV_ITEMS = [
   { href: "/", label: "Dashboard" },
@@ -20,10 +21,11 @@ export function Sidebar({
 }) {
   const pathname = usePathname();
 
-  const items =
-    role === "owner"
-      ? [...NAV_ITEMS, { href: "/sync", label: "Sync" }, { href: "/users", label: "Users" }]
-      : NAV_ITEMS;
+  const items = [
+    ...NAV_ITEMS,
+    ...(isEditorRole(role) ? [{ href: "/sync", label: "Sync" }] : []),
+    ...(role === "owner" ? [{ href: "/users", label: "Users" }] : []),
+  ];
 
   return (
     <aside

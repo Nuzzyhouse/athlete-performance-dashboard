@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { requireOwner } from "@/lib/authz";
+import { requireEditor } from "@/lib/authz";
 import { prisma } from "@/lib/prisma";
 
 function num(formData: FormData, key: string): number {
@@ -18,7 +18,7 @@ export async function createAthleteAction(
   _prevState: { error?: string } | undefined,
   formData: FormData,
 ): Promise<{ error?: string }> {
-  await requireOwner();
+  await requireEditor();
 
   const name = str(formData, "name");
   const level = str(formData, "level");
@@ -50,7 +50,7 @@ export async function createAthleteAction(
 }
 
 export async function archiveAthleteAction(athleteId: string, archived: boolean) {
-  await requireOwner();
+  await requireEditor();
   await prisma.athlete.update({ where: { id: athleteId }, data: { archived } });
   revalidatePath("/roster");
   revalidatePath("/");
@@ -67,7 +67,7 @@ export async function updateAthleteFieldsAction(
     predOverride?: number | null;
   },
 ) {
-  await requireOwner();
+  await requireEditor();
   await prisma.athlete.update({ where: { id: athleteId }, data });
   revalidatePath(`/athletes/${athleteId}`);
   revalidatePath("/roster");
@@ -75,7 +75,7 @@ export async function updateAthleteFieldsAction(
 }
 
 export async function updateRomAction(athleteId: string, rom: unknown) {
-  await requireOwner();
+  await requireEditor();
   await prisma.athlete.update({ where: { id: athleteId }, data: { rom: rom as never } });
   revalidatePath(`/athletes/${athleteId}`);
 }
@@ -98,7 +98,7 @@ export async function addForcePlateTestAction(
     mph?: number;
   },
 ) {
-  await requireOwner();
+  await requireEditor();
 
   const athlete = await prisma.athlete.findUniqueOrThrow({ where: { id: athleteId } });
   const mph = data.mph ?? 0;
@@ -145,7 +145,7 @@ export async function logPerformanceAction(
   athleteId: string,
   data: { date: Date; mph: number },
 ) {
-  await requireOwner();
+  await requireEditor();
 
   const athlete = await prisma.athlete.findUniqueOrThrow({ where: { id: athleteId } });
 
@@ -171,7 +171,7 @@ export async function logPerformanceAction(
 }
 
 export async function deleteTestEntryAction(testId: string) {
-  await requireOwner();
+  await requireEditor();
   const test = await prisma.testEntry.delete({ where: { id: testId } });
   revalidatePath(`/athletes/${test.athleteId}`);
   revalidatePath("/roster");
@@ -191,7 +191,7 @@ export async function updateTestEntryAction(
     mph: number;
   }>,
 ) {
-  await requireOwner();
+  await requireEditor();
   const test = await prisma.testEntry.update({ where: { id: testId }, data });
   revalidatePath(`/athletes/${test.athleteId}`);
   revalidatePath("/roster");

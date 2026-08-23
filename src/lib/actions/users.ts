@@ -10,6 +10,13 @@ function generateTempPassword(): string {
   return crypto.randomBytes(9).toString("base64").replace(/[+/=]/g, "");
 }
 
+const VALID_ROLES = ["owner", "manager", "coach"] as const;
+type ValidRole = (typeof VALID_ROLES)[number];
+
+function isValidRole(role: string): role is ValidRole {
+  return (VALID_ROLES as readonly string[]).includes(role);
+}
+
 export interface UserRow {
   id: string;
   email: string;
@@ -40,7 +47,7 @@ export async function createUserAction(
   if (!email || !name) {
     return { error: "Name and email are required." };
   }
-  if (role !== "owner" && role !== "coach") {
+  if (!isValidRole(role)) {
     return { error: "Invalid role." };
   }
 
@@ -63,13 +70,13 @@ export async function createUserAction(
 export async function updateUserRoleAction(userId: string, role: string) {
   const owner = await requireOwner();
 
-  if (role !== "owner" && role !== "coach") {
+  if (!isValidRole(role)) {
     throw new Error("Invalid role.");
   }
 
-  if (role === "coach") {
+  if (role !== "owner") {
     // Never allow the last owner account to demote itself (or be demoted) into a
-    // state where nobody can manage the roster or this very page.
+    // state where nobody can manage user accounts.
     const ownerCount = await prisma.user.count({ where: { role: "owner" } });
     const target = await prisma.user.findUnique({ where: { id: userId } });
     if (target?.role === "owner" && ownerCount <= 1) {

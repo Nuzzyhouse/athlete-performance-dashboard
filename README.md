@@ -9,9 +9,11 @@ prediction model to your athletes, and shape the rest to your program.
 
 ## What's implemented
 
-- Sidebar app: Dashboard · Roster · Analysis · Reports · Sync (owner-only)
-- Credentials auth (NextAuth v5) with two roles — `owner` (full edit) and `coach` (view-only) —
-  enforced both in the UI and inside every server action
+- Sidebar app: Dashboard · Roster · Analysis · Reports · Sync (owner/manager only) · Users (owner-only)
+- Credentials auth (NextAuth v5) with three roles — `owner` (full edit + user management),
+  `manager` (full edit, same as owner minus user management), and `coach` (view-only) — enforced
+  both in the UI and inside every server action. An in-app **Users** page (owner-only) creates,
+  edits, resets, and deletes accounts — no more editing the database by hand.
 - The prediction engine (`src/lib/prediction.ts`) — regression + outlier hold-out + per-level
   re-centering, with a pinned snapshot test (`src/lib/prediction.test.ts`)
 - Manual athlete/test CRUD, movement/ROM profiling, printable progress reports with server-side
@@ -125,9 +127,20 @@ the only VALD-specific files. `src/lib/vald/sync.ts` (matching, dedupe, preview)
 
 ## 6. Accounts and roles
 
-There's no in-app user-management screen (out of scope for v1) — create additional accounts by
-running the seed script again with different `SEED_OWNER_*` env vars, or by inserting directly into
-the `User` table with a bcrypt-hashed password and `role` set to `"owner"` or `"coach"`.
+Once you've signed in as the seeded owner, manage every other account from the in-app **Users**
+page (owner-only) — add coaches/managers, reset a forgotten password, change a role, or remove an
+account. New accounts get a one-time generated password to hand off; the recipient sets their own
+on first login.
+
+Three roles:
+- `owner` — full data edit rights, plus the only role that can manage user accounts. There's always
+  at least one; the app won't let you delete or demote the last remaining owner.
+- `manager` — identical data-edit permissions to owner (roster, tests, sync, everything) but can't
+  touch the Users page.
+- `coach` — view-only everywhere.
+
+The very first owner account still comes from the seed script (`SEED_OWNER_*` env vars) since
+there's no one to create it from inside the app yet.
 
 ## 7. Known local-dev quirk
 

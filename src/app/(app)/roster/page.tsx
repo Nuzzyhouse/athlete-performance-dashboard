@@ -3,6 +3,7 @@ import { getFullRoster } from "@/lib/data/roster";
 import { computeAnalytics } from "@/lib/prediction";
 import { RosterPageClient } from "@/components/roster/roster-page-client";
 import type { RosterRow } from "@/components/roster/roster-table";
+import { isEditorRole } from "@/lib/roles";
 
 export default async function RosterPage() {
   const session = await auth();
@@ -34,7 +35,7 @@ export default async function RosterPage() {
     <RosterPageClient
       active={activeRows}
       archived={archivedRows}
-      isOwner={session?.user?.role === "owner"}
+      isOwner={isEditorRole(session?.user?.role ?? "")}
     />
   );
 }

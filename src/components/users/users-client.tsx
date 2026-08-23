@@ -152,7 +152,8 @@ export function UsersClient({
             <label htmlFor="role">Role</label>
             <select id="role" name="role" defaultValue="coach">
               <option value="coach">Coach (view-only)</option>
-              <option value="owner">Owner (full edit)</option>
+              <option value="manager">Manager (full edit, no user management)</option>
+              <option value="owner">Owner (full edit + manage users)</option>
             </select>
           </div>
           <div style={{ display: "flex", gap: "0.5rem" }}>
@@ -198,6 +199,7 @@ export function UsersClient({
                     style={{ fontSize: "0.8rem" }}
                   >
                     <option value="coach">Coach</option>
+                    <option value="manager">Manager</option>
                     <option value="owner">Owner</option>
                   </select>
                 </td>
