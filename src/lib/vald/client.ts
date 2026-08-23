@@ -108,7 +108,9 @@ export async function getRecentTests(tenantId: string, modifiedFromUtc: string):
   const results: ValdTest[] = [];
   let cursor = modifiedFromUtc;
 
-  for (let page = 0; page < 50; page++) {
+  // A multi-year initial backfill can span far more pages than a routine nightly
+  // incremental sync ever would — cap generously rather than silently truncating.
+  for (let page = 0; page < 500; page++) {
     const data = await valdFetch<{ tests: ValdTest[] } | null>(
       `${serviceHost("extforcedecks")}/tests?tenantId=${encodeURIComponent(tenantId)}&modifiedFromUtc=${encodeURIComponent(cursor)}`,
     );

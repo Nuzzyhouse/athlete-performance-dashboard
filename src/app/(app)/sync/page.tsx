@@ -4,6 +4,10 @@ import { prisma } from "@/lib/prisma";
 import { isValdConfigured } from "@/lib/vald/client";
 import { SyncClient } from "@/components/sync/sync-client";
 
+// A multi-year VALD backfill fetches trial data per-test, sequentially — give the
+// preview/import actions this page calls the platform's max duration, not the ~10s default.
+export const maxDuration = 60;
+
 export default async function SyncPage() {
   const session = await auth();
   if (session?.user?.role !== "owner") {

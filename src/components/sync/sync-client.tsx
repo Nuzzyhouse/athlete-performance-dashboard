@@ -63,13 +63,20 @@ export function SyncClient({
       </div>
 
       <div className="card" style={{ padding: "1.1rem 1.25rem" }}>
-        <h2 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "0.6rem" }}>Preview import</h2>
+        <h2 style={{ fontSize: "0.95rem", fontWeight: 700, marginBottom: "0.4rem" }}>Preview import</h2>
+        <p style={{ fontSize: "0.75rem", color: "var(--text-mute)", marginBottom: "0.6rem" }}>
+          &quot;Look back&quot; filters by when a test record was last modified in VALD, not when it
+          was performed — use the 5-year option once to pull in your full history, then the
+          shorter windows (or the nightly sync) for everything after that.
+        </p>
         <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", marginBottom: "0.75rem" }}>
           <label style={{ fontSize: "0.8rem" }}>Look back</label>
           <select value={sinceDays} onChange={(e) => setSinceDays(Number(e.target.value))}>
             <option value={7}>7 days</option>
             <option value={30}>30 days</option>
             <option value={90}>90 days</option>
+            <option value={365}>1 year</option>
+            <option value={1825}>5 years (initial backfill)</option>
           </select>
           <button
             type="button"
