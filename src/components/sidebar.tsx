@@ -41,11 +41,21 @@ export function Sidebar({
         top: 0,
       }}
     >
-      <div style={{ padding: "0 0.4rem", marginBottom: "1.75rem" }}>
-        <div style={{ fontWeight: 700, fontSize: "0.95rem", color: "var(--text-pri)" }}>
-          Performance
+      <div style={{ marginBottom: "1.75rem" }}>
+        <div
+          style={{
+            background: "#ffffff",
+            borderRadius: 8,
+            padding: "0.6rem 0.7rem",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/x3-logo.gif"
+            alt="X3 Performance and Physical Therapy"
+            style={{ width: "100%", height: "auto", display: "block" }}
+          />
         </div>
-        <div style={{ fontSize: "0.75rem", color: "var(--text-mute)" }}>Dashboard</div>
       </div>
 
       <nav style={{ display: "flex", flexDirection: "column", gap: "0.15rem", flex: 1 }}>
